@@ -1,17 +1,12 @@
 package MainPackage;
 
-import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.JFrame;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 
 public class ComboBox {
 
@@ -58,7 +53,7 @@ public class ComboBox {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		final JComboBox comboBox = new JComboBox(MONTHS);
+		final JComboBox<String> comboBox = new JComboBox<String>(MONTHS);
 		comboBox.setBounds(79, 28, 84, 20);
 		frame.getContentPane().add(comboBox);
 		
@@ -67,8 +62,7 @@ public class ComboBox {
 		
 		int day = now.get(Calendar.DAY_OF_MONTH);
 		
-		//final int year = now.get(Calendar.YEAR);
-		final int year = 2016;
+		int year = now.get(Calendar.YEAR);
 		
 		
 		//This code for setting current Month
@@ -79,19 +73,35 @@ public class ComboBox {
 				}
 			}
 		
-		final JComboBox comboBox_1 = new JComboBox(DAYS);
+		final JComboBox<String> comboBox_1 = new JComboBox<String>(DAYS);
 		comboBox_1.setBounds(79, 92, 84, 20);
 		frame.getContentPane().add(comboBox_1);
 		
-		for (int i = 1; i < DAYS.length; i++) {
+		for (int j = 1; j <= DAYS.length; j++) {
 			
-			if (i == day) {
+			if (j == day) {
 				
-			comboBox_1.setSelectedIndex(i - 1);
+				comboBox_1.setSelectedItem(DAYS[j - 1]);
+			}
+			
+		}
+		
+		if (comboBox_1.toString() == "February") {
+			
+			for (int i = 1; i < DAYS.length; i++) {
+				
+				if (year % 400 == 0 || year % 100 == 0)
+					
+					comboBox_1.addItem(DAYS[i - 2]);
+				
+				else {
+					
+					comboBox_1.addItem(DAYS[i]);
+				}		
 			}
 		}
 		
-		JComboBox comboBox_2 = new JComboBox();
+		JComboBox<Integer> comboBox_2 = new JComboBox<Integer>();
 		comboBox_2.setBounds(79, 154, 84, 20);
 		frame.getContentPane().add(comboBox_2);
 		
@@ -120,24 +130,6 @@ public class ComboBox {
 				for (int i = 0; i < DAYS.length; i++) {
 					comboBox_1.addItem(DAYS[i]);
 				}
-			}
-			
-			else if (selected.toString() == "February") {
-				
-				comboBox_1.removeAllItems();
-			
-				for (int i = 0; i < DAYS.length - 3; i++) {
-					
-					if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)) == true) {
-						
-						comboBox_1.addItem(DAYS[i + 1]);
-					}
-					else {
-						
-						comboBox_1.addItem(DAYS[i]);
-					}
-				}
-				
 			}
 			
 			else {
